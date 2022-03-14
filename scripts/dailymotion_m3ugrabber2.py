@@ -48,9 +48,10 @@ def grab(line):
         print(m3u)
 
 print('#EXTM3U')
-print(banner)
+print('#EXT-X-VERSION:3')
+print('#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000')
 s = requests.Session()
-with open('../dailymotion_channel_info.txt') as f:
+with open('../dailymotion_channel_info2.txt') as f:
     for line in f:
         line = line.strip()
         if not line or line.startswith('~~'):
@@ -61,7 +62,9 @@ with open('../dailymotion_channel_info.txt') as f:
             grp_title = line[1].strip().title()
             tvg_logo = line[2].strip()
             tvg_id = line[3].strip()
-            print(f'\n#EXTINF:-1 group-title="{grp_title}" tvg-logo="{tvg_logo}" tvg-id="{tvg_id}", {ch_name}')
         else:
             grab(line)
         
+if 'temp.txt' in os.listdir():
+    os.system('rm temp.txt')
+    os.system('rm watch*')
